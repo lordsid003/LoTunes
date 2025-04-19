@@ -1,0 +1,10 @@
+librosa
+tqdm
+numpy 
+sounddevice
+scipy
+matplotlib
+supabase
+python_dotenv
+streamlit
+audio-recorder-streamlit

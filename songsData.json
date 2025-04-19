@@ -1,0 +1,26 @@
+{
+    "Attention": {
+        "artists": ["Charlie Puth"],
+        "posterURL": "https://virginradio.ro/wp-content/uploads/2017/04/charlie-puth-attention.png"
+    },
+    "Die For You": {
+        "artists": ["The Weeknd", "Ariana Grande"],
+        "posterURL": "https://i.pinimg.com/originals/ce/3e/8a/ce3e8ad9d364ae6fbf97d1c52f0ecae1.jpg"
+    },
+    "Khairiyat": {
+        "artists": ["Arijit Singh"],
+        "posterURL": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/415f9a101160211.5f1878d96c8ab.jpg"
+    },
+    "Save Your Tears": {
+        "artists": ["The Weeknd", "Ariana Grande"],
+        "posterURL": "https://i.ytimg.com/vi/1Me9AhI5LWw/maxresdefault.jpg"
+    },
+    "Shayad": {
+        "artists": ["Arijit Singh"],
+        "posterURL": "https://images.genius.com/f8c25f0aba492a895d2b3335ac20306e.1000x1000x1.jpg"
+    },
+    "We Don't Talk Anymore": {
+        "artists": ["Charlie Puth", "Selena Gomez"],
+        "posterURL": "https://tse1.mm.bing.net/th?id=OIP.wHq7pPQU9qx5utiVbIajSQHaHa&pid=Api&P=0&h=180"
+    }
+}

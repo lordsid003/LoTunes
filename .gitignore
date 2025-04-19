@@ -1,4 +1,8 @@
+# Environment variable
 .env
-songs/
+# Songs folder
+songs
+# Python cache
 __pycache__
+# Virtual environment
 musicvenv
