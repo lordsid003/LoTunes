@@ -418,7 +418,7 @@ elif not st.session_state.identification_attempted:
                     tmp_path = tmp_file.name
 
                 # Save to session state
-                st.session_state.temp_path = tmp_path
+                st.session_state.temp_path = None
                 st.session_state.audio_bytes = wav_audio_data
                 st.session_state.recording_complete = True
                 st.session_state.recording_in_progress = False
@@ -428,7 +428,7 @@ elif not st.session_state.identification_attempted:
 
         
         # Displays audio player and identify button if recording is complete
-        if st.session_state.recording_complete and st.session_state.temp_path and not st.session_state.identification_attempted:
+        if st.session_state.recording_complete and not st.session_state.identification_attempted:
             st.success("✅ Recording saved successfully!")
             # Creates playback section with some visual enhancement
             st.markdown("""
@@ -458,7 +458,7 @@ elif not st.session_state.identification_attempted:
                 # Run identification directly within the Streamlit context
                 with st.spinner("Analyzing audio fingerprint..."):
                     try:
-                        spec, _ = get_spectrogram(st.session_state.temp_path)
+                        spec, _ = get_spectrogram(st.session_state.audio_bytes, from_bytes=True)
                         peaks = get_peaks(spec)
                         hashes = generate_hashes(peaks)
                         

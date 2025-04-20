@@ -1,4 +1,5 @@
 import librosa
+import io
 import numpy as np
 # Used to find the local maxima in the Spectrogram (for finding peak intensities)
 from scipy.ndimage import maximum_filter
@@ -8,9 +9,13 @@ FAN_VALUE: int = 15
 # Minimum threshold amplitude to be considered as a peak (removes noise or irrelevant characteristics for compression)
 MIN_AMPLITUDE: int = 10
 
-def get_spectrogram(audio_path: str, sampling_rate: int = 44100):
-    # Sampling rate = 44100 Hertz
-    audio_file, sample_rate = librosa.load(audio_path, sr = sampling_rate, mono = True)
+def get_spectrogram(audio_data, sampling_rate: int = 44100, from_bytes: bool = False):
+    if from_bytes:
+        # Load audio directly from bytes
+        audio_file, sample_rate = librosa.load(io.BytesIO(audio_data), sr=sampling_rate, mono=True)
+    else:
+        # Original behavior: load from file path
+        audio_file, sample_rate = librosa.load(audio_data, sr=sampling_rate, mono=True)
     # Audio normalization for noise reduction and characteristic recognition
     audio_file = librosa.util.normalize(audio_file)
     # Short-time Fourier Transform (DFT) for converting Time-wavelength curve to Time-frequency curve 
