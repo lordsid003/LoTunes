@@ -14,20 +14,48 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+database = load_fingerprints_from_supabase()
+
 with st.sidebar:
     st.subheader("Available Songs")
-    for songData in songs:
-        st.markdown(f"""
-        <div class="song-name-header">
-            {songData['song']}
-        </div>
-        """, unsafe_allow_html=True)
-        for artist in songData["artists"]:
+
+    st.markdown("""
+    <style>
+        .song-poster-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .song-container {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(250, 250, 250, 0.2);
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+    for songName, songData in database.items():
+        st.markdown("<div class='song-container'>", unsafe_allow_html=True)
+        col1, col2 = st.columns([1, 2])
+
+        with col1:
             st.markdown(f"""
-            <p class="song-artists" style="font-size: 0.8rem;">
-                {artist}   
-            </p>
+                <img src="{songData['song_poster_URL']}" class="song-poster-image" alt="{songName}"/>
             """, unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"""
+            <div class="song-name-header">
+                🎶 {songName}
+            </div>
+            """, unsafe_allow_html=True)
+            for artist in songData["song_artists"]:
+                st.markdown(f"""
+                <p class="song-artists" style="font-size: 0.7rem;">
+                    {artist}   
+                </p>
+                """, unsafe_allow_html=True)
         st.markdown("""<div></div>""", unsafe_allow_html=True)
 
 # Custom CSS for styling with theme compatibility
@@ -52,10 +80,11 @@ st.markdown("""
     }
             
     .song-name-header {
-        border: 0.5px solid orangered;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        color: white !important; /* Force white text regardless of theme */
+        background-color: #FF4B4B;
+        color: white !important;
+        border-radius: 0.3rem;
+        font-size: 0.85rem;
+        padding: 0.5rem;
         text-align: center;
         margin-bottom: 1rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -429,15 +458,10 @@ elif not st.session_state.identification_attempted:
                 # Run identification directly within the Streamlit context
                 with st.spinner("Analyzing audio fingerprint..."):
                     try:
-                        # Call the recognize function from match.py with proper error handling
-                        from match import match_clip_to_song, load_fingerprints_from_supabase
-                        from utils.fingerprints import get_spectrogram, get_peaks, generate_hashes
-                        
                         spec, _ = get_spectrogram(st.session_state.temp_path)
                         peaks = get_peaks(spec)
                         hashes = generate_hashes(peaks)
                         
-                        database = load_fingerprints_from_supabase()
                         best_match, match_score, artists, poster_url = match_clip_to_song(hashes, database)
 
                         # Store results in session state
